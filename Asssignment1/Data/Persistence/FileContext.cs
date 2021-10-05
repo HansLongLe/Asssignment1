@@ -4,15 +4,17 @@ using System.IO;
 using System.Text.Json;
 using Models;
 
-namespace FileData
+namespace Persistence
 {
     public class FileContext
     {
         public IList<Family> Families { get; private set; }
         public IList<Adult> Adults { get; private set; }
+        
+        
 
         private readonly string familiesFile = "families.json";
-        private readonly string adultsFile = "adults.json";
+        private readonly string adultsFile = System.IO.Directory.GetCurrentDirectory() + "\\data\\adults.json";
 
         public FileContext()
         {
@@ -22,7 +24,7 @@ namespace FileData
 
         private IList<T> ReadData<T>(string s)
         {
-            using (var jsonReader = File.OpenText(familiesFile))
+            using (var jsonReader = File.OpenText(adultsFile))
             {
                 return JsonSerializer.Deserialize<List<T>>(jsonReader.ReadToEnd());
             }
