@@ -1,6 +1,8 @@
 @page "/"
-@using Models
 @using Persistence
+
+
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -11,11 +13,14 @@ Here you can view information of every registered adults.
 <div>
     <div class="search-container">
        
-            <input type = "text" placeholder="Search.." />
-            <button type= "submit"><i class="fa fa-search"></i></button>
-            
-    
-        </div>
+        
+            <input type = "text" placeholder="Search.."  @bind="searchedText"/>
+            <button type= "submit" @onclick="Search"><i class="fa fa-search"></i></button>
+
+
+
+
+    </div>
     <table>
         <tr>
             <th>ID</th>
@@ -30,25 +35,53 @@ Here you can view information of every registered adults.
             <th>Job title</th>
             <th>Salary</th>
         </tr>
-
-        @foreach (var adult in fileContext.Adults)
+@if (visible == true)
 {
-    <tr>
-        <td>@adult.Id</td>
-        <td>@adult.FirstName</td>
-        <td>@adult.LastName</td>
-        <td>@adult.HairColor</td>
-        <td>@adult.EyeColor</td>
-        <td>@adult.Age</td>
-        <td>@adult.Weight</td>
-        <td>@adult.Height</td>
-        <td>@adult.Sex</td>
-        <td>@adult.JobTitle.JobTitle</td>
-        <td>@adult.JobTitle.Salary</td>
+    @foreach (var adult in fileContext.Adults)
+    {
+        <tr>
+            <td>@adult.Id</td>
+            <td>@adult.FirstName</td>
+            <td>@adult.LastName</td>
+            <td>@adult.HairColor</td>
+            <td>@adult.EyeColor</td>
+            <td>@adult.Age</td>
+            <td>@adult.Weight</td>
+            <td>@adult.Height</td>
+            <td>@adult.Sex</td>
+            <td>@adult.JobTitle.JobTitle</td>
+            <td>@adult.JobTitle.Salary</td>
 
-    </tr>
+        </tr>
+    }
 }
-       
+@if (visible == false)
+{
+    @foreach (var adult in fileContext.Adults)
+    {
+        if (adult.FirstName.Contains(searchedText) || adult.LastName.Contains(searchedText) || adult.HairColor.Contains(searchedText)
+        ||adult.EyeColor.Contains(searchedText) || adult.Age.ToString().Contains(searchedText) ||adult.Weight.ToString().Contains(searchedText) 
+        || adult.Height.ToString().Contains(searchedText) || adult.Sex.Contains(searchedText) || adult.JobTitle.JobTitle.Contains(searchedText)
+        || adult.JobTitle.Salary.ToString().Contains(searchedText))
+        {
+            <tr>
+                <td>@adult.Id</td>
+                <td>@adult.FirstName</td>
+                <td>@adult.LastName</td>
+                <td>@adult.HairColor</td>
+                <td>@adult.EyeColor</td>
+                <td>@adult.Age</td>
+                <td>@adult.Weight</td>
+                <td>@adult.Height</td>
+                <td>@adult.Sex</td>
+                <td>@adult.JobTitle.JobTitle</td>
+                <td>@adult.JobTitle.Salary</td>
+
+            </tr>
+        }
+    }
+}
+
 
     </table>
 </div>
@@ -56,9 +89,11 @@ Here you can view information of every registered adults.
 @code
 {
     private FileContext fileContext = new FileContext();
-
+    private String searchedText {get; set; }
+    private Boolean visible = true;
+    
     public void Search()
     {
-        
+        visible = false;
     }
 }
