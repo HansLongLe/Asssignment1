@@ -1,0 +1,34 @@
+﻿
+@if (!buttonPressed)
+{
+    <h1>Add adult</h1>
+    <h3><b>Adult information</b></h3>
+    <li>
+        <ul><input type="text" placeholder="ID..">ID</ul>
+        <ul><input type="text" placeholder="First name..">First name</ul>
+        <ul><input type="text" placeholder="Last name..">Last name</ul>
+        <ul><input type="text" placeholder="Hair color..">Hair color</ul>
+        <ul><input type="text" placeholder="Eye color..">Eye color</ul>
+        <ul><input type="number" placeholder="Age..">Eye color</ul>
+        <ul><input type="number" placeholder="Weight..">Weight</ul>
+        <ul><input type="number" placeholder="Height..">Height</ul>
+        <ul><input type="text" placeholder="Sex..">Sex</ul>
+        <ul><input type="text" placeholder="Job title..">Job title</ul>
+        <ul><input type="text" placeholder="Salary..">Salary</ul>
+    </li>
+    <button @onclick="addButtonPressed">Add</button>
+}
+
+@if (buttonPressed)
+{
+    <AddAdults/>  
+}
+
+@code {
+    private Boolean buttonPressed = false;
+
+    public void addButtonPressed()
+    {
+        buttonPressed = true;
+    }
+}

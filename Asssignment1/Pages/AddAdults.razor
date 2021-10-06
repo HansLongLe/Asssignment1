@@ -1,17 +1,30 @@
 @page "/addAdults"
 
-<h1>Counter</h1>
 
-<p>Current count: @currentCount</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@if (!buttonPressed)
+{
+    <h1>Add adult</h1>
+    <p>Here you can add new adults.</p>
+    <button @onclick="addButtonPressed">Add</button>
+}
+
+
+@if (buttonPressed)
+{
+    <AddInformationAboutAdult/>   
+}
+
+
+
 
 @code {
-    private int currentCount = 0;
+    private Boolean buttonPressed = false;
 
-    private void IncrementCount()
+    public void addButtonPressed()
     {
-        currentCount++;
+        buttonPressed = true;
     }
 
 }
