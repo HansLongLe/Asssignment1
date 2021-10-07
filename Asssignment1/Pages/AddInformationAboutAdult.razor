@@ -1,20 +1,23 @@
-﻿
+﻿@using Persistence
+@using Models
+@using System.ComponentModel.DataAnnotations
+
 @if (!buttonPressed)
 {
     <h1>Add adult</h1>
     <h3><b>Adult information</b></h3>
     <li>
-        <ul><input type="text" placeholder="ID..">ID</ul>
-        <ul><input type="text" placeholder="First name..">First name</ul>
-        <ul><input type="text" placeholder="Last name..">Last name</ul>
-        <ul><input type="text" placeholder="Hair color..">Hair color</ul>
-        <ul><input type="text" placeholder="Eye color..">Eye color</ul>
-        <ul><input type="number" placeholder="Age..">Eye color</ul>
-        <ul><input type="number" placeholder="Weight..">Weight</ul>
-        <ul><input type="number" placeholder="Height..">Height</ul>
-        <ul><input type="text" placeholder="Sex..">Sex</ul>
-        <ul><input type="text" placeholder="Job title..">Job title</ul>
-        <ul><input type="text" placeholder="Salary..">Salary</ul>
+        <ul><input type="text" placeholder="ID.." @bind="ID">ID</ul>
+        <ul><input type="text" placeholder="First name.." @bind="firstName">First name</ul>
+        <ul><input type="text" placeholder="Last name.." @bind="lastName">Last name</ul>
+        <ul><input type="text" placeholder="Hair color.."@bind="hairColor">Hair color</ul>
+        <ul><input type="text" placeholder="Eye color.."@bind="eyeColor">Eye color</ul>
+        <ul><input type="number" placeholder="Age.."@bind="age">Ager</ul>
+        <ul><input type="number" placeholder="Weight.." @bind="weight">Weight</ul>
+        <ul><input type="number" placeholder="Height.."@bind="height">Height</ul>
+        <ul><input type="text" placeholder="Sex.."@bind="sex">Sex</ul>
+        <ul><input type="text" placeholder="Job title.."@bind="jobTitle">Job title</ul>
+        <ul><input type="text" placeholder="Salary.."@bind="salary">Salary</ul>
     </li>
     <button @onclick="addButtonPressed">Add</button>
 }
@@ -26,9 +29,28 @@
 
 @code {
     private Boolean buttonPressed = false;
+    private FileContext _fileContext = new FileContext();
+    
+    private int ID;
+    private String firstName;
+    private String lastName;
+    private String hairColor;
+    private String eyeColor;
+    private String age;
+    private String weight;
+    private String height;
+    private String sex;
+    private String jobTitle;
+    private String salary;
 
     public void addButtonPressed()
     {
         buttonPressed = true;
+        Adult adult = new Adult();
+        adult.Id = ID;
+        adult.FirstName = firstName;
+         _fileContext.Adults.Add(adult);
+        _fileContext.SaveChanges();
+
     }
 }
