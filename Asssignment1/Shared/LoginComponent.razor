@@ -1,4 +1,32 @@
 ﻿@page "/login"
+@using Models
+@inject LoggedIn _loggedIn
 <div>
-Username <input type="text"> Password <input> <button>Login</button>
+
+    @if (!_loggedIn.loggedIn)
+    {
+        <div> Username <input type="text" @bind="username"> Password <input type="text" @bind="password"> <button @onclick="Login">Login</button> </div>
+    }
+    
+    @if (_loggedIn.loggedIn)
+    {
+        <p>Admin</p>
+    }
+
+    @code
+    {
+        private User _user = new User();
+        private String username;
+        private String password;
+        
+
+        public void Login()
+        {
+            if (_user.userName.Equals(username) && _user.password.Equals(password))
+            {
+                _loggedIn.loggedIn = true;
+            }
+        }
+
+    }
 </div>

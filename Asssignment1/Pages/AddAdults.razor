@@ -1,20 +1,28 @@
 @page "/addAdults"
+@using Models
+@inject LoggedIn _loggedIn
 
 
-
-
-@if (!buttonPressed)
+@if (_loggedIn.loggedIn)
 {
-    <h1>Add adult</h1>
-    <p>Here you can add new adults.</p>
-    <button @onclick="addButtonPressed">Add</button>
-}
+    @if (!buttonPressed)
+    {
+        <h1>Add adult</h1>
+        <p>Here you can add new adults.</p>
+        <button @onclick="addButtonPressed">Add</button>
+    }
 
 
 @if (buttonPressed)
 {
     <AddInformationAboutAdult/>   
 }
+}
+@if (!_loggedIn.loggedIn)
+{
+    <h1>You must first login to add Adults.</h1>
+}
+
 
 
 

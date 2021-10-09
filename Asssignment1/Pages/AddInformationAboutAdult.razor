@@ -2,13 +2,13 @@
 @using Models
 @using System.ComponentModel.DataAnnotations
 @using System.Diagnostics.CodeAnalysis
+@using System.Linq
 
 @if (!buttonPressed)
 {
     <h1>Add adult</h1>
     <h3><b>Adult information</b></h3>
     <li>
-        <ul><input type="number" placeholder="ID.." @bind="ID">ID</ul>
         <ul><input type="text" placeholder="First name.." @bind="firstName">First name</ul>
         <ul><input type="text" placeholder="Last name.." @bind="lastName">Last name</ul>
         <ul><input type="text" placeholder="Hair color.."@bind="hairColor">Hair color</ul>
@@ -31,24 +31,35 @@
 @code {
     private Boolean buttonPressed = false;
     private FileContext _fileContext = new FileContext();
-
-    private int? ID = null;
+    
+    [Required]
     private String firstName;
+    [Required]
     private String lastName;
+    [Required]
     private String hairColor;
+    [Required]
     private String eyeColor;
-    private int? age = null;
-    private int? weight = null;
-    private int? height = null;
+    [Required]
+    [Range(18, Int32.MaxValue)]
+    private int? age;
+    [Required]
+    private int? weight;
+    [Required]
+    private int? height;
+    [Required]
     private String sex;
+    [Required]
     private String jobTitle;
-    private int? salary = null;
+    [Required]
+    private int? salary;
 
     public void addButtonPressed()
     {
         buttonPressed = true;
         Adult adult = new Adult();
-        adult.Id = (int)ID;
+        int maxID = _fileContext.Adults.Count;
+        adult.Id = _fileContext.Adults.Cast<Adult>().ElementAt(maxID-1).Id + 1;
         adult.FirstName = firstName;
         adult.LastName = lastName;
         adult.HairColor = hairColor;
@@ -57,8 +68,10 @@
         adult.Weight = (int)weight;
         adult.Height = (int)height;
         adult.Sex = sex;
-        adult.JobTitle.JobTitle = jobTitle;
-        adult.JobTitle.Salary = (int)salary;
+        Job job = new Job();
+        job.JobTitle = jobTitle;
+        job.Salary = (int)salary;
+        adult.JobTitle = job;
         _fileContext.Adults.Add(adult);
         _fileContext.SaveChanges();
 

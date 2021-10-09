@@ -10,8 +10,8 @@ namespace Persistence
     {
         public IList<Family> Families { get; private set; }
         public IList<Adult> Adults { get; private set; }
-        
-        
+
+
 
         private readonly string familiesFile = "families.json";
         private readonly string adultsFile = System.IO.Directory.GetCurrentDirectory() + "\\data\\adults.json";
